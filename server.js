@@ -112,20 +112,19 @@ app.get('/api/health', (req, res) => {
 // Login
 app.post('/api/login', async (req, res) => {
     try {
-        const { mobileNumber, password } = req.body;
+        const { username, password } = req.body;
 
-        if (!mobileNumber || !password) {
-            return res.status(400).json({ error: 'Mobile number and password required' });
+        if (!username || !password) {
+            return res.status(400).json({ error: 'Username and password required' });
         }
 
-        const user = await authenticateUser(mobileNumber, password);
+        const user = await authenticateUser(username, password);
         req.session.user = user;
 
         res.json({
             success: true,
             user: {
                 username: user.username,
-                mobileNumber: user.mobileNumber,
                 userId: user.id
             }
         });

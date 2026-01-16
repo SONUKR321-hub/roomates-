@@ -149,20 +149,20 @@ function registerUser(username, password, mobileNumber) {
   });
 }
 
-function authenticateUser(mobileNumber, password) {
+function authenticateUser(username, password) {
   return new Promise((resolve, reject) => {
     db.get(
-      'SELECT * FROM users WHERE mobile_number = ?',
-      [mobileNumber],
+      'SELECT * FROM users WHERE username = ?',
+      [username],
       (err, user) => {
         if (err) return reject(err);
-        if (!user) return reject(new Error('Invalid mobile number or password'));
+        if (!user) return reject(new Error('Invalid username or password'));
 
         bcrypt.compare(password, user.password_hash, (err, match) => {
           if (err) return reject(err);
-          if (!match) return reject(new Error('Invalid mobile number or password'));
+          if (!match) return reject(new Error('Invalid username or password'));
 
-          resolve({ id: user.id, username: user.username, mobileNumber: user.mobile_number });
+          resolve({ id: user.id, username: user.username });
         });
       }
     );

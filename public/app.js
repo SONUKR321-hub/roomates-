@@ -110,10 +110,10 @@ async function apiCall(endpoint, options = {}) {
   }
 }
 
-async function login(mobileNumber, password) {
+async function login(username, password) {
   return apiCall('/login', {
     method: 'POST',
-    body: JSON.stringify({ mobileNumber, password })
+    body: JSON.stringify({ username, password })
   });
 }
 
@@ -147,33 +147,25 @@ async function getHistory() {
 elements.loginForm.addEventListener('submit', async (e) => {
   e.preventDefault();
 
-  const mobileNumber = document.getElementById('mobileNumber').value.trim();
+  const username = document.getElementById('username').value.trim();
   const password = document.getElementById('password').value;
 
-  // Validate mobile number
-  if (!/^[0-9]{10}$/.test(mobileNumber)) {
-    elements.loginError.textContent = 'Please enter a valid 10-digit mobile number';
+  if (!username || !password) {
+    elements.loginError.textContent = 'Please enter username and password';
     elements.loginError.classList.remove('hidden');
     return;
   }
 
-  // Show loading state
-  const submitBtn = elements.loginForm.querySelector('button[type="submit"]');
-  const btnText = submitBtn.querySelector('.btn-text');
-  const btnLoader = submitBtn.querySelector('.btn-loader');
-
-  btnText.classList.add('hidden');
-  btnLoader.classList.remove('hidden');
-  submitBtn.disabled = true;
   elements.loginError.classList.add('hidden');
+  const loginBtn = e.target.querySelector('button[type="submit"]');
+  const originalText = loginBtn.textContent;
+  loginBtn.textContent = 'Logging in...';
+  loginBtn.classList.add('btn-loader');
 
   try {
-    const result = await login(mobileNumber, password);
-    state.currentUser = result.user.username;
-
-    // Success - show dashboard
-    showScreen('dashboard');
-    elements.welcomeText.textContent = `Welcome, ${capitalizeFirst(state.currentUser)}!`;
+    const data = await login(username, password);
+    state.currentUser = data.user;
+    showDashboard();
     await loadDashboardData();
 
   } catch (error) {
@@ -189,12 +181,11 @@ elements.loginForm.addEventListener('submit', async (e) => {
 // Quick login chips
 document.querySelectorAll('.user-chip').forEach(chip => {
   chip.addEventListener('click', () => {
-    const mobile = chip.dataset.mobile;
-    const name = chip.dataset.name;
-    document.getElementById('mobileNumber').value = mobile;
-    // Auto-fill password (for demo - default passwords)
-    document.getElementById('password').value = `${name.toLowerCase()}123`;
-    document.getElementById('mobileNumber').focus();
+    const username = chip.dataset.username;
+    const password = chip.dataset.password;
+    document.getElementById('username').value = username;
+    document.getElementById('password').value = password;
+    document.getElementById('username').focus();
   });
 });
 
