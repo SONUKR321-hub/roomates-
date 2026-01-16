@@ -34,12 +34,13 @@ app.use(express.static('public'));
 
 // Session configuration
 app.use(session({
-    secret: 'roommate-task-secret-key-2026',
+    secret: process.env.SESSION_SECRET || 'roommate-task-manager-secret-key-change-in-production',
     resave: false,
     saveUninitialized: false,
     cookie: {
-        maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
-        httpOnly: true
+        secure: process.env.NODE_ENV === 'production',
+        httpOnly: true,
+        maxAge: 24 * 60 * 60 * 1000 // 24 hours
     }
 }));
 
