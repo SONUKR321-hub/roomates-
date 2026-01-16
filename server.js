@@ -3,11 +3,12 @@ const express = require('express');
 const session = require('express-session');
 const cors = require('cors');
 const cron = require('node-cron');
+const path = require('path');
 const {
     initializeDatabase,
     createDefaultUsers,
     authenticateUser,
-    getCurrentMonthTasks,
+    ensureMonthlyTasks,
     createMonthlyTasks,
     completeTask,
     getAllUsersStatus,
@@ -16,7 +17,8 @@ const {
     generateAllMonthlyReports,
     getMonthlyReport,
     getUserMonthlyReports,
-    getAllMonthlyReports
+    getAllMonthlyReports,
+    getCurrentMonthTasks
 } = require('./database');
 
 const app = express();
