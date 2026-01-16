@@ -71,25 +71,7 @@ function calculateMonthlyAssignments(month, year) {
     return assignments;
 }
 
-// Initialize monthly tasks if they don't exist
-async function ensureMonthlyTasks() {
-    const now = new Date();
-    const month = now.getMonth() + 1;
-    const year = now.getFullYear();
-
-    try {
-        const existingTasks = await getCurrentMonthTasks();
-
-        if (existingTasks.length === 0) {
-            console.log(`📅 Creating tasks for ${month}/${year}`);
-            const assignments = calculateMonthlyAssignments(month, year);
-            await createMonthlyTasks(month, year, assignments);
-            console.log('✅ Monthly tasks created:', assignments);
-        }
-    } catch (err) {
-        console.error('Error ensuring monthly tasks:', err);
-    }
-}
+// CRON JOBS - Monthly Automation
 
 // Cron job: Check and create new month's tasks at midnight on 1st
 // Runs at 00:01 on the 1st of every month
