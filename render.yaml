@@ -1,0 +1,20 @@
+{
+  "name": "Roommate Tasks",
+  "version": 2,
+  "services": [
+    {
+      "type": "web",
+      "name": "roommate-tasks-backend",
+      "runtime": "node",
+      "plan": "free",
+      "buildCommand": "npm install",
+      "startCommand": "node server.js",
+      "envVars": [
+        {
+          "key": "NODE_ENV",
+          "value": "production"
+        }
+      ]
+    }
+  ]
+}
