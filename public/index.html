@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#8B5CF6">
+  <meta name="description" content="Roommate task management app with monthly rotation">
+  <title>Roommate Tasks</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script type="module" src="capacitor.js"></script>
+</head>
+
+<body>
+  <script src="config.js"></script>
+  <!-- Login Screen -->
+  <div id="loginScreen" class="screen active">
+    <div class="login-container">
+      <div class="logo">
+        <div class="logo-icon">🏠</div>
+        <h1>Roommate Tasks</h1>
+        <p class="subtitle">Monthly task rotation made easy</p>
+      </div>
+
+      <form id="loginForm" class="login-form">
+        <div class="form-group">
+          <label for="mobileNumber">Mobile Number</label>
+          <input type="tel" id="mobileNumber" name="mobileNumber" placeholder="Enter 10-digit mobile number"
+            autocomplete="tel" pattern="[0-9]{10}" maxlength="10" required>
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" placeholder="Enter your password"
+            autocomplete="current-password" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary">
+          <span class="btn-text">Login</span>
+          <span class="btn-loader hidden">Logging in...</span>
+        </button>
+
+        <div id="loginError" class="error-message hidden"></div>
+      </form>
+
+      <div class="quick-login">
+        <p class="hint">Quick login:</p>
+        <div class="user-chips">
+          <button class="user-chip" data-mobile="7280892805" data-name="Deepanshu">Deepanshu</button>
+          <button class="user-chip" data-mobile="8210658796" data-name="Sonu">Sonu</button>
+          <button class="user-chip" data-mobile="9162130124" data-name="Sachin">Sachin</button>
+          <button class="user-chip" data-mobile="9142018096" data-name="Sintu">Sintu</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dashboard Screen -->
+  <div id="dashboardScreen" class="screen">
+    <header class="header">
+      <div class="header-content">
+        <div class="header-left">
+          <h2 id="welcomeText">Welcome</h2>
+          <p id="monthText" class="month-text"></p>
+        </div>
+        <button id="logoutBtn" class="btn-icon" title="Logout">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+            <polyline points="16 17 21 12 16 7"></polyline>
+            <line x1="21" y1="12" x2="9" y2="12"></line>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="main-content">
+      <!-- Loading State -->
+      <div id="loadingState" class="loading-state">
+        <div class="spinner"></div>
+        <p>Loading tasks...</p>
+      </div>
+
+      <!-- Error State -->
+      <div id="errorState" class="error-state hidden">
+        <div class="error-icon">⚠️</div>
+        <p id="errorText"></p>
+        <button id="retryBtn" class="btn btn-secondary">Retry</button>
+      </div>
+
+      <!-- Tasks Container -->
+      <div id="tasksContainer" class="tasks-container hidden">
+        <!-- Current Tasks Section -->
+        <section class="section">
+          <h3 class="section-title">Current Month Tasks</h3>
+          <div id="currentTasks" class="tasks-grid"></div>
+        </section>
+
+        <!-- Monthly Report Section -->
+        <section class="section">
+          <div class="section-header">
+            <h3 class="section-title">📊 My Monthly Report</h3>
+            <button id="toggleReport" class="btn-text-link">Show</button>
+          </div>
+          <div id="reportContainer" class="report-container hidden"></div>
+        </section>
+
+        <!-- All Users Status Section -->
+        <section class="section">
+          <h3 class="section-title">Everyone's Status</h3>
+          <div id="usersStatus" class="users-grid"></div>
+        </section>
+
+        <!-- History Section -->
+        <section class="section">
+          <div class="section-header">
+            <h3 class="section-title">Recent Activity</h3>
+            <button id="toggleHistory" class="btn-text-link">Show</button>
+          </div>
+          <div id="historyContainer" class="history-container hidden"></div>
+        </section>
+      </div>
+    </main>
+
+    <!-- Floating Refresh Button -->
+    <button id="refreshBtn" class="fab" title="Refresh">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <polyline points="23 4 23 10 17 10"></polyline>
+        <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="toast hidden">
+    <span id="toastMessage"></span>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,14 @@
+{
+  "appId": "com.roommates.taskmanager",
+  "appName": "Roommate Tasks",
+  "webDir": "public",
+  "server": {
+    "androidScheme": "https"
+  },
+  "android": {
+    "buildOptions": {
+      "keystorePath": "",
+      "keystoreAlias": ""
+    }
+  }
+}

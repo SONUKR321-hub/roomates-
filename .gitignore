@@ -1,0 +1,7 @@
+node_modules/
+roommates.db
+*.log
+.DS_Store
+android/
+public/capacitor.js
+public/capacitor.config.json

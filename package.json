@@ -1,0 +1,31 @@
+{
+  "name": "roommate-task-manager",
+  "version": "1.0.0",
+  "description": "Mobile task management app for roommates with monthly rotation",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "android": "npx cap open android",
+    "sync": "npx cap sync",
+    "build:android": "npx cap sync android"
+  },
+  "keywords": [
+    "task-manager",
+    "roommate",
+    "mobile"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@capacitor/android": "^5.7.8",
+    "@capacitor/cli": "^5.7.8",
+    "@capacitor/core": "^5.7.8",
+    "bcrypt": "^5.1.1",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "express-session": "^1.17.3",
+    "node-cron": "^3.0.3",
+    "sqlite3": "^5.1.6"
+  }
+}
